@@ -28,16 +28,42 @@ export const constructorSlice = createSlice({
     addItem: {
       reducer: (state, action: PayloadAction<TConstructorIngredient>) => {
         if (action.payload.type === 'bun') {
-          //console.log('BUN');
           state.constructorItems.bun = action.payload;
         } else {
-          //console.log('INGREDIENT');
           state.constructorItems.ingredients.push(action.payload);
         }
       },
       prepare: (item: TIngredient) => {
         const id = nanoid();
         return { payload: { ...item, id } };
+      }
+    },
+    deleteItem: (state, action: PayloadAction<TConstructorIngredient>) => {
+      state.constructorItems.ingredients =
+        state.constructorItems.ingredients.filter(
+          (item) => item.id !== action.payload.id
+        );
+    },
+    moveItemUp: (state, action: PayloadAction<TConstructorIngredient>) => {
+      const id = action.payload.id;
+      const ingredients = state.constructorItems.ingredients;
+      const index = ingredients.findIndex((item) => item.id === id);
+      if (index > 0) {
+        [ingredients[index - 1], ingredients[index]] = [
+          ingredients[index],
+          ingredients[index - 1]
+        ];
+      }
+    },
+    moveItemDown: (state, action: PayloadAction<TConstructorIngredient>) => {
+      const id = action.payload.id;
+      const ingredients = state.constructorItems.ingredients;
+      const index = ingredients.findIndex((item) => item.id === id);
+      if (index >= 0 && index < state.constructorItems.ingredients.length - 1) {
+        [ingredients[index], ingredients[index + 1]] = [
+          ingredients[index + 1],
+          ingredients[index]
+        ];
       }
     }
   },
@@ -46,5 +72,6 @@ export const constructorSlice = createSlice({
   }
 });
 
-export const { addItem } = constructorSlice.actions;
+export const { addItem, deleteItem, moveItemUp, moveItemDown } =
+  constructorSlice.actions;
 export const { getConstructorItems } = constructorSlice.selectors;
