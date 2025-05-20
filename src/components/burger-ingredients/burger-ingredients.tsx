@@ -12,11 +12,11 @@ import { Preloader } from '@ui';
 
 export const BurgerIngredients: FC = () => {
   const { ingredients, loading, error } = useSelector(getIngredientsSelector);
-  const dispatch = useDispatch();
+  //const dispatch = useDispatch();
 
-  useEffect(() => {
+  /*   useEffect(() => {
     dispatch(getIngredients());
-  }, [dispatch]);
+  }, [dispatch]); */
 
   const buns = ingredients.filter((item) => item.type === 'bun');
   const mains = ingredients.filter((item) => item.type === 'main');
