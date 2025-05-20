@@ -1,25 +1,36 @@
-import { getIngredientsApi, orderBurgerApi } from '@api';
+import { orderBurgerApi } from '@api';
 import {
   createAsyncThunk,
   createSlice,
   nanoid,
   PayloadAction
 } from '@reduxjs/toolkit';
-import { TConstructorIngredient, TIngredient } from '@utils-types';
+import { TConstructorIngredient, TIngredient, TOrder } from '@utils-types';
 
 type TConstructorState = {
   constructorItems: {
     bun: TConstructorIngredient | null;
     ingredients: TConstructorIngredient[];
   };
+  loading: boolean;
+  error: string | null;
+  order: TOrder | null;
 };
 
 const initialState: TConstructorState = {
   constructorItems: {
     bun: null,
     ingredients: []
-  }
+  },
+  loading: false,
+  error: null,
+  order: null
 };
+
+export const orderBurger = createAsyncThunk(
+  'order/post',
+  async (data: string[]) => orderBurgerApi(data)
+);
 
 export const constructorSlice = createSlice({
   name: 'burgerConstructor',
@@ -65,13 +76,46 @@ export const constructorSlice = createSlice({
           ingredients[index]
         ];
       }
+    },
+    deleteOrder: (state) => {
+      state.order = null;
     }
   },
   selectors: {
-    getConstructorItems: (state) => state.constructorItems
+    getConstructorItems: (state) => state.constructorItems,
+    getLoadingSelector: (state) => state.loading,
+    getOrderSelector: (state) => state.order
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(orderBurger.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+        state.order = null;
+      })
+      .addCase(orderBurger.rejected, (state, action) => {
+        state.loading = false;
+        /** TODO: ПРОВЕРИТЬ ВОТ ЭТУ ОШИБКУ, я оставлю заглушку */
+        //state.error = action.error?.message ?? 'неизвестная ошибка'
+        state.error = action.error.message
+          ? action.error.message
+          : 'ПРОИЗОШЛА ОШИБКА, СООБЩЕНИЕ undefined';
+      })
+      .addCase(orderBurger.fulfilled, (state, action) => {
+        state.loading = false;
+        //добавляем в стейт новый заказ
+        //в стейте пока только номер из экшена
+        state.order = action.payload.order;
+        //удаляем ингредиенты в конструкторе
+        state.constructorItems = {
+          bun: null,
+          ingredients: []
+        };
+      });
   }
 });
 
-export const { addItem, deleteItem, moveItemUp, moveItemDown } =
+export const { addItem, deleteItem, moveItemUp, moveItemDown, deleteOrder } =
   constructorSlice.actions;
-export const { getConstructorItems } = constructorSlice.selectors;
+export const { getConstructorItems, getLoadingSelector, getOrderSelector } =
+  constructorSlice.selectors;
