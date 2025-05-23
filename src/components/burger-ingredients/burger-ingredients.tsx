@@ -3,20 +3,12 @@ import { useInView } from 'react-intersection-observer';
 
 import { TTabMode } from '@utils-types';
 import { BurgerIngredientsUI } from '../ui/burger-ingredients';
-import { useDispatch, useSelector } from '../../services/store';
-import {
-  getIngredients,
-  getIngredientsSelector
-} from '../../services/slices/apiSlices/ingredientsSlice';
+import { useSelector } from '../../services/store';
+import { getIngredientsSelector } from '../../services/slices/apiSlices/ingredientsSlice';
 import { Preloader } from '@ui';
 
 export const BurgerIngredients: FC = () => {
   const { ingredients, loading, error } = useSelector(getIngredientsSelector);
-  //const dispatch = useDispatch();
-
-  /*   useEffect(() => {
-    dispatch(getIngredients());
-  }, [dispatch]); */
 
   const buns = ingredients.filter((item) => item.type === 'bun');
   const mains = ingredients.filter((item) => item.type === 'main');

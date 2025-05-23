@@ -7,8 +7,15 @@ import {
 } from 'react-redux';
 import { ingredientsSlice } from './slices/apiSlices/ingredientsSlice';
 import { constructorSlice } from './slices/apiSlices/constructorSlice';
+import { feedSlice } from './slices/apiSlices/feedSlice';
+import { orderSlice } from './slices/apiSlices/orderSlice';
 
-const rootReducer = combineSlices(ingredientsSlice, constructorSlice); // Заменить на импорт настоящего редьюсера
+const rootReducer = combineSlices(
+  ingredientsSlice,
+  constructorSlice,
+  feedSlice,
+  orderSlice
+); // Заменить на импорт настоящего редьюсера
 
 const store = configureStore({
   reducer: rootReducer,

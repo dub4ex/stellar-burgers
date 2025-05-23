@@ -10,10 +10,8 @@ export const BurgerIngredient: FC<TBurgerIngredientProps> = memo(
   ({ ingredient, count }) => {
     const location = useLocation();
     const dispatch = useDispatch();
-    //const storeState = useSelector((state) => state);
     const handleAdd = () => {
       dispatch(addItem(ingredient));
-      //console.log(JSON.stringify(storeState, null, 2));
     };
 
     return (

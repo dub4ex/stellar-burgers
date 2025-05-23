@@ -23,11 +23,14 @@ const App = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  const background = location.state && location.state.background;
+  const match = location.pathname.match(/\/([^\/]+)$/);
+  const endpoint = match && /^\d+$/.test(match[1]) ? match[1] : '';
+
   useEffect(() => {
     dispatch(getIngredients());
   }, [dispatch]);
 
-  const background = location.state && location.state.background;
   const onClose = () => {
     navigate(background || '/');
   };
@@ -37,8 +40,18 @@ const App = () => {
       {/* Возможно нужен будет аутлет, но я не уверен */}
       <AppHeader />
       <Routes location={background || location}>
+        <Route path='*' element={<NotFound404 />} />
         <Route path='/' element={<ConstructorPage />} />
+        <Route path='/feed' element={<Feed />} />
         <Route path='/ingredients/:id' element={<IngredientDetails />} />
+        {/* Посмотреть как передаются данные в ордеринфо */}
+        <Route path='/feed/:number' element={<OrderInfo />} />
+        {/* 
+
+
+
+
+ */}{' '}
         {/* ВЫШЕ СДЕЛАННЫЕ РОУТЫ, НИЖЕ НУЖНО ПРОВЕРЯТЬ */}
         {/* 
 
@@ -46,20 +59,6 @@ const App = () => {
 
 
  */}{' '}
-        <Route path='/feed'>
-          <Route index element={<Feed />} />
-          <Route
-            path=':number'
-            element={
-              <Modal
-                title='Example ПОМЕНЯТЬ'
-                /* ПОМЕНЯТЬ ОНКЛОЗ */ onClose={() => {}}
-              >
-                <OrderInfo />
-              </Modal>
-            }
-          />
-        </Route>
         {/* должен быть защищенным */}
         <Route path='/login' element={<Login />} />
         {/* должен быть защищенным */}
@@ -87,7 +86,6 @@ const App = () => {
             }
           />
         </Route>
-        <Route path='*' element={<NotFound404 />} />
       </Routes>
       {/* 
 
@@ -104,6 +102,14 @@ const App = () => {
             element={
               <Modal title='Детали ингредиента' onClose={onClose}>
                 <IngredientDetails />
+              </Modal>
+            }
+          />
+          <Route
+            path='/feed/:number'
+            element={
+              <Modal title={`#${endpoint.padStart(6, '0')}`} onClose={onClose}>
+                <OrderInfo />
               </Modal>
             }
           />
