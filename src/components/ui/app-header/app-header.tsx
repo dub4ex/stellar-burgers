@@ -10,13 +10,19 @@ import {
 import { NavLink } from 'react-router-dom';
 
 export const AppHeaderUI: FC<TAppHeaderUIProps> = ({ userName }) => (
+  //Вывести isActive в отдельную переменную, чтобы не дублировать код
   <header className={styles.header}>
     <nav className={`${styles.menu} p-4`}>
       <div className={styles.menu_part_left}>
-        <>
+        <NavLink
+          to={'/'}
+          className={({ isActive }) =>
+            isActive ? `${styles.link_active} ${styles.link}` : styles.link
+          }
+        >
           <BurgerIcon type={'primary'} />
           <p className='text text_type_main-default ml-2 mr-10'>Конструктор</p>
-        </>
+        </NavLink>
         <NavLink
           to={'/feed'}
           className={({ isActive }) =>
@@ -30,12 +36,19 @@ export const AppHeaderUI: FC<TAppHeaderUIProps> = ({ userName }) => (
       <div className={styles.logo}>
         <Logo className='' />
       </div>
-      <div className={styles.link_position_last}>
-        <ProfileIcon type={'primary'} />
-        <p className='text text_type_main-default ml-2'>
-          {userName || 'Личный кабинет'}
-        </p>
-      </div>
+      <NavLink
+        to={'/profile'}
+        className={({ isActive }) =>
+          isActive ? `${styles.link_active} ${styles.link}` : styles.link
+        }
+      >
+        <div className={styles.link_position_last}>
+          <ProfileIcon type={'primary'} />
+          <p className='text text_type_main-default ml-2'>
+            {userName || 'Личный кабинет'}
+          </p>
+        </div>
+      </NavLink>
     </nav>
   </header>
 );

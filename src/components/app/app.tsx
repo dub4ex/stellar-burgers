@@ -14,9 +14,16 @@ import styles from './app.module.css';
 
 import { AppHeader, IngredientDetails, Modal, OrderInfo } from '@components';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
-import { useDispatch } from '../../services/store';
+import { useDispatch, useSelector } from '../../services/store';
 import { useEffect } from 'react';
 import { getIngredients } from '../../services/slices/apiSlices/ingredientsSlice';
+import { PrivateRoute } from '../private-route';
+import {
+  authenticatedSelector,
+  checkUserAuth,
+  getUser,
+  getUserData
+} from '../../services/slices/apiSlices/userSlice';
 
 const App = () => {
   const location = useLocation();
@@ -28,6 +35,7 @@ const App = () => {
   const endpoint = match && /^\d+$/.test(match[1]) ? match[1] : '';
 
   useEffect(() => {
+    dispatch(checkUserAuth());
     dispatch(getIngredients());
   }, [dispatch]);
 
@@ -46,6 +54,49 @@ const App = () => {
         <Route path='/ingredients/:id' element={<IngredientDetails />} />
         {/* Посмотреть как передаются данные в ордеринфо */}
         <Route path='/feed/:number' element={<OrderInfo />} />
+        {/* проверить как заходит с аутентификацией и без */}
+        <Route
+          path='/profile'
+          element={
+            <PrivateRoute>
+              <Profile />
+            </PrivateRoute>
+          }
+        />
+        {/* проверить как заходит с аутентификацией и без */}
+        <Route
+          path='/login'
+          element={
+            <PrivateRoute onlyUnAuth>
+              <Login />
+            </PrivateRoute>
+          }
+        />
+        {/* проверить как заходит с аутентификацией и без */}
+        <Route
+          path='/register'
+          element={
+            <PrivateRoute onlyUnAuth>
+              <Register />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path='/forgot-password'
+          element={
+            <PrivateRoute onlyUnAuth>
+              <ForgotPassword />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path='/reset-password'
+          element={
+            <PrivateRoute onlyUnAuth>
+              <ResetPassword />
+            </PrivateRoute>
+          }
+        />
         {/* 
 
 
@@ -59,16 +110,6 @@ const App = () => {
 
 
  */}{' '}
-        {/* должен быть защищенным */}
-        <Route path='/login' element={<Login />} />
-        {/* должен быть защищенным */}
-        <Route path='/register' element={<Register />} />
-        {/* должен быть защищенным */}
-        <Route path='/forgot-password' element={<ForgotPassword />} />
-        {/* должен быть защищенным */}
-        <Route path='/reset-password' element={<ResetPassword />} />
-        {/* должен быть защищенным */}
-        <Route path='/profile' element={<Profile />} />
         {/* это вложенный маршрут */}
         {/* должен быть защищенным */}
         <Route path='/profile/orders'>
@@ -108,6 +149,7 @@ const App = () => {
           <Route
             path='/feed/:number'
             element={
+              /* ПОМЕНЯТЬ ЦИФРЫ В МОДАЛКЕ И ДОБАВИТЬ ИХ В ОРДЕРИНФО, смотри QnA */
               <Modal title={`#${endpoint.padStart(6, '0')}`} onClose={onClose}>
                 <OrderInfo />
               </Modal>

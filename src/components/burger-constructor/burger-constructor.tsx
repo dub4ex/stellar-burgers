@@ -16,6 +16,7 @@ export const BurgerConstructor: FC = () => {
   const orderModalData = useSelector(getOrderSelector);
   const dispatch = useDispatch();
 
+  //добавить что заказ может сделать только зарегистрированный пользователь
   const onOrderClick = () => {
     //нельзя делать заказ без булок
     if (!constructorItems.bun || orderRequest) return;
