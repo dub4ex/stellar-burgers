@@ -18,6 +18,7 @@ export const OrderInfo: FC = () => {
   const orderNumber = +number!;
 
   useEffect(() => {
+    //можно добавить взятие заказа из стора, чтобы уменьшить количество запросов на сервер
     dispatch(getOrderByNumber(orderNumber));
   }, [dispatch]);
 

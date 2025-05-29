@@ -1,6 +1,7 @@
 import { getIngredientsApi } from '@api';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { TIngredient } from '@utils-types';
+import { getErrorMessage } from '../../../utils/functions';
 
 type TIngredientsState = {
   ingredients: Array<TIngredient>;
@@ -32,11 +33,7 @@ export const ingredientsSlice = createSlice({
       })
       .addCase(getIngredients.rejected, (state, action) => {
         state.loading = false;
-        /** TODO: ПРОВЕРИТЬ ВОТ ЭТУ ОШИБКУ, я оставлю заглушку */
-        //state.error = action.error?.message ?? 'неизвестная ошибка'
-        state.error = action.error.message
-          ? action.error.message
-          : 'ПРОИЗОШЛА ОШИБКА, СООБЩЕНИЕ undefined';
+        state.error = getErrorMessage(action.error.message);
       })
       .addCase(getIngredients.fulfilled, (state, action) => {
         state.loading = false;

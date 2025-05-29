@@ -6,6 +6,7 @@ import {
   PayloadAction
 } from '@reduxjs/toolkit';
 import { TConstructorIngredient, TIngredient, TOrder } from '@utils-types';
+import { getErrorMessage } from '../../../utils/functions';
 
 type TConstructorState = {
   constructorItems: {
@@ -95,16 +96,11 @@ export const constructorSlice = createSlice({
       })
       .addCase(orderBurger.rejected, (state, action) => {
         state.loading = false;
-        /** TODO: ПРОВЕРИТЬ ВОТ ЭТУ ОШИБКУ, я оставлю заглушку */
-        //state.error = action.error?.message ?? 'неизвестная ошибка'
-        state.error = action.error.message
-          ? action.error.message
-          : 'ПРОИЗОШЛА ОШИБКА, СООБЩЕНИЕ undefined';
+        state.error = getErrorMessage(action.error.message);
       })
       .addCase(orderBurger.fulfilled, (state, action) => {
         state.loading = false;
         //добавляем в стейт новый заказ
-        //в стейте пока только номер из экшена
         state.order = action.payload.order;
         //удаляем ингредиенты в конструкторе
         state.constructorItems = {

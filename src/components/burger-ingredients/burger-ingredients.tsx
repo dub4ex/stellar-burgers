@@ -55,12 +55,10 @@ export const BurgerIngredients: FC = () => {
     return <Preloader />;
   }
 
-  //заглушка из теории. мб надо по-другому оформить
   if (!loading && error) {
     return <p className='error'>Запрос завершился с ошибкой: {error}</p>;
   }
 
-  //заглушка из теории. мб надо по-другому оформить
   if (!loading && ingredients.length === 0) {
     return <p className='message'>Нет ни одного ингредиента</p>;
   }

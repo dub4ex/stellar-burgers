@@ -1,6 +1,5 @@
 import { Preloader } from '@ui';
 import { FeedUI } from '@ui-pages';
-import { TOrder } from '@utils-types';
 import { FC, useEffect } from 'react';
 import { useDispatch, useSelector } from '../../services/store';
 import {
@@ -10,16 +9,18 @@ import {
 
 export const Feed: FC = () => {
   const dispatch = useDispatch();
-  const { orders } = useSelector(getFeedSelector);
+  const { orders, loading, error } = useSelector(getFeedSelector);
 
-  //МБ НАДО ЭТО В АПП ДЕРЖАТЬ
   useEffect(() => {
     dispatch(getFeed());
   }, [dispatch]);
 
-  /**TODO подумать также об отрисовки ошибки если данные не придут а массив всё равно будет пустой */
-  if (!orders.length) {
+  if (loading) {
     return <Preloader />;
+  }
+
+  if (!loading && error) {
+    return <p className='error'>Запрос завершился с ошибкой: {error}</p>;
   }
 
   return (

@@ -2,7 +2,6 @@ import { FC, SyntheticEvent, useEffect, useState } from 'react';
 import { LoginUI } from '@ui-pages';
 import { useDispatch, useSelector } from '../../services/store';
 import {
-  authenticatedSelector,
   clearError,
   errorSelector,
   loginUser

@@ -1,6 +1,7 @@
 import { getOrderByNumberApi } from '@api';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { TOrder } from '@utils-types';
+import { getErrorMessage } from '../../../utils/functions';
 
 type TOrderState = {
   loading: boolean;
@@ -35,11 +36,7 @@ export const orderSlice = createSlice({
       })
       .addCase(getOrderByNumber.rejected, (state, action) => {
         state.loading = false;
-        /** TODO: ПРОВЕРИТЬ ВОТ ЭТУ ОШИБКУ, я оставлю заглушку */
-        //state.error = action.error?.message ?? 'неизвестная ошибка'
-        state.error = action.error.message
-          ? action.error.message
-          : 'ПРОИЗОШЛА ОШИБКА, СООБЩЕНИЕ undefined';
+        state.error = getErrorMessage(action.error.message);
       })
       .addCase(getOrderByNumber.fulfilled, (state, action) => {
         state.loading = false;

@@ -9,17 +9,25 @@ import {
   getOrderSelector,
   orderBurger
 } from '../../services/slices/apiSlices/constructorSlice';
+import { authenticatedSelector } from '../../services/slices/apiSlices/userSlice';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 export const BurgerConstructor: FC = () => {
   const constructorItems = useSelector(getConstructorItems);
   const orderRequest = useSelector(getLoadingSelector);
   const orderModalData = useSelector(getOrderSelector);
   const dispatch = useDispatch();
+  const isAuth = useSelector(authenticatedSelector);
+  const location = useLocation();
+  const navigate = useNavigate();
 
-  //добавить что заказ может сделать только зарегистрированный пользователь
   const onOrderClick = () => {
     //нельзя делать заказ без булок
     if (!constructorItems.bun || orderRequest) return;
+    //проверка пользователя только после того как заказ будет не пустым
+    if (!isAuth) {
+      return navigate('/login', { state: { from: location } });
+    }
     dispatch(
       orderBurger([
         constructorItems.bun._id,

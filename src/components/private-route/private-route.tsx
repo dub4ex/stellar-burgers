@@ -3,7 +3,6 @@ import { FC } from 'react';
 import { TPrivateRouteProps } from './type';
 import { useSelector } from '../../services/store';
 import {
-  authenticatedSelector,
   isAuthCheckedSelector,
   userSelector
 } from '../../services/slices/apiSlices/userSlice';
@@ -12,7 +11,7 @@ import { Preloader } from '@ui';
 
 export const PrivateRoute: FC<TPrivateRouteProps> = ({
   children,
-  onlyUnAuth
+  onlyUnAuth = false
 }) => {
   const location = useLocation();
   const isAuthChecked = useSelector(isAuthCheckedSelector);

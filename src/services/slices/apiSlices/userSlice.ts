@@ -9,6 +9,7 @@ import {
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { TUser } from '@utils-types';
 import { deleteCookie, getCookie, setCookie } from '../../../utils/cookie';
+import { getErrorMessage } from '../../../utils/functions';
 
 type TUserState = {
   isAuthChecked: boolean;
@@ -42,7 +43,7 @@ export const loginUser = createAsyncThunk(
 export const registerUser = createAsyncThunk(
   'user/registerUser',
   async (data: TRegisterData) => {
-    //либо сразу сохранять в слайсе данные и логиниться либо не сохранять и тогд будет редирект на логин, но тогда добавить что почта с регистрации через локал стор добавится в логин
+    //либо сразу сохранять в сторе данные и логиниться либо не сохранять и тогда будет редирект на логин с дополнительным шагом авторизации
     const userData = await registerUserApi(data);
     if (!userData.success) {
       return userData;
@@ -96,6 +97,7 @@ export const userSlice = createSlice({
     userLogout: (state) => {
       state.data = null;
     },
+    //для очистки предыдущих ошибок перед монтированием новых компонентов, можно также развести все ошибки по разным именованиям, чтобы не пересекались
     clearError: (state) => {
       state.loginUserError = null;
     },
@@ -121,11 +123,7 @@ export const userSlice = createSlice({
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.loginUserRequest = false;
-        /** TODO: ПРОВЕРИТЬ ВОТ ЭТУ ОШИБКУ, я оставлю заглушку */
-        //state.error = action.error?.message ?? 'неизвестная ошибка'
-        state.loginUserError = action.error.message
-          ? action.error.message
-          : 'ПРОИЗОШЛА ОШИБКА, СООБЩЕНИЕ undefined';
+        state.loginUserError = getErrorMessage(action.error.message);
         state.isAuthChecked = true;
       })
       .addCase(loginUser.fulfilled, (state, action) => {
@@ -142,11 +140,7 @@ export const userSlice = createSlice({
         state.data = null;
       })
       .addCase(registerUser.rejected, (state, action) => {
-        /** TODO: ПРОВЕРИТЬ ВОТ ЭТУ ОШИБКУ, я оставлю заглушку */
-        //state.error = action.error?.message ?? 'неизвестная ошибка'
-        state.loginUserError = action.error.message
-          ? action.error.message
-          : 'ПРОИЗОШЛА ОШИБКА, СООБЩЕНИЕ undefined';
+        state.loginUserError = getErrorMessage(action.error.message);
         state.isAuthChecked = true;
         state.loginUserRequest = false;
       })
@@ -163,11 +157,7 @@ export const userSlice = createSlice({
       })
       .addCase(getUser.rejected, (state, action) => {
         state.isAuthenticated = false;
-        /** TODO: ПРОВЕРИТЬ ВОТ ЭТУ ОШИБКУ, я оставлю заглушку */
-        //state.error = action.error?.message ?? 'неизвестная ошибка'
-        state.loginUserError = action.error.message
-          ? action.error.message
-          : 'ПРОИЗОШЛА ОШИБКА, СООБЩЕНИЕ undefined';
+        state.loginUserError = getErrorMessage(action.error.message);
         state.loginUserRequest = false;
       })
       .addCase(getUser.fulfilled, (state, action) => {
@@ -182,11 +172,7 @@ export const userSlice = createSlice({
       })
       .addCase(logoutUser.rejected, (state, action) => {
         state.loginUserRequest = false;
-        /** TODO: ПРОВЕРИТЬ ВОТ ЭТУ ОШИБКУ, я оставлю заглушку */
-        //state.error = action.error?.message ?? 'неизвестная ошибка'
-        state.loginUserError = action.error.message
-          ? action.error.message
-          : 'ПРОИЗОШЛА ОШИБКА, СООБЩЕНИЕ undefined';
+        state.loginUserError = getErrorMessage(action.error.message);
       })
       .addCase(logoutUser.fulfilled, (state) => {
         state.loginUserRequest = false;
@@ -199,11 +185,7 @@ export const userSlice = createSlice({
         state.loginUserRequest = true;
       })
       .addCase(updateUser.rejected, (state, action) => {
-        /** TODO: ПРОВЕРИТЬ ВОТ ЭТУ ОШИБКУ, я оставлю заглушку */
-        //state.error = action.error?.message ?? 'неизвестная ошибка'
-        state.loginUserError = action.error.message
-          ? action.error.message
-          : 'ПРОИЗОШЛА ОШИБКА, СООБЩЕНИЕ undefined';
+        state.loginUserError = getErrorMessage(action.error.message);
         state.loginUserRequest = false;
         state.isAuthChecked = true;
       })
