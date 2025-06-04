@@ -19,9 +19,7 @@ const initialState: TFeedState = {
   totalToday: null
 };
 
-export const getFeed = createAsyncThunk('feed/getAll', async () =>
-  getFeedsApi()
-);
+export const getFeed = createAsyncThunk('feed/getAll', getFeedsApi);
 
 export const feedSlice = createSlice({
   name: 'feed',

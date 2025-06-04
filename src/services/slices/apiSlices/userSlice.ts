@@ -54,9 +54,7 @@ export const registerUser = createAsyncThunk(
   }
 );
 
-export const getUser = createAsyncThunk('user/getInfo', async () =>
-  getUserApi()
-);
+export const getUser = createAsyncThunk('user/getInfo', getUserApi);
 
 export const checkUserAuth = createAsyncThunk(
   'user/checkUser',
