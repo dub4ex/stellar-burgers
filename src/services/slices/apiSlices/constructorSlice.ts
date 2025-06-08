@@ -115,3 +115,5 @@ export const { addItem, deleteItem, moveItemUp, moveItemDown, deleteOrder } =
   constructorSlice.actions;
 export const { getConstructorItems, getLoadingSelector, getOrderSelector } =
   constructorSlice.selectors;
+const constructorReducer = constructorSlice.reducer;
+export default constructorReducer;
