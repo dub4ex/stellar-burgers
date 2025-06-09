@@ -10,6 +10,9 @@ jest.mock('@api', () => ({
 }));
 
 describe('тесты слайса ingredients', () => {
+      beforeEach(() => {
+      jest.clearAllMocks();
+    });
   const initialState = {
     ingredients: [],
     loading: false,

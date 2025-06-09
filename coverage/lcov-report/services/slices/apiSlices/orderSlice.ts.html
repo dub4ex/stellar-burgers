@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">83.33% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>40/48</span>
+                <span class='fraction'>50/50</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>1/1</span>
+                <span class='fraction'>7/7</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">83.33% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>40/48</span>
+                <span class='fraction'>50/50</span>
             </div>
         
             
@@ -111,7 +111,9 @@
 <a name='L46'></a><a href='#L46'>46</a>
 <a name='L47'></a><a href='#L47'>47</a>
 <a name='L48'></a><a href='#L48'>48</a>
-<a name='L49'></a><a href='#L49'>49</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L49'></a><a href='#L49'>49</a>
+<a name='L50'></a><a href='#L50'>50</a>
+<a name='L51'></a><a href='#L51'>51</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -142,18 +144,20 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -190,23 +194,25 @@ export const orderSlice = createSlice({
   extraReducers: (builder) =&gt; {
     builder
       .addCase(getOrderByNumber.pending, (state) =&gt; {
-<span class="cstat-no" title="statement not covered" >        state.loading = true;</span>
-<span class="cstat-no" title="statement not covered" >        state.error = null;</span>
-<span class="cstat-no" title="statement not covered" >        //сделал очистку стейта при пендинге чтобы при открытии нового заказа на долю секунды не был виден старый заказ</span>
-<span class="cstat-no" title="statement not covered" >        state.order = null;</span>
+        state.loading = true;
+        state.error = null;
+        //сделал очистку стейта при пендинге чтобы при открытии нового заказа на долю секунды не был виден старый заказ
+        state.order = null;
       })
       .addCase(getOrderByNumber.rejected, (state, action) =&gt; {
-<span class="cstat-no" title="statement not covered" >        state.loading = false;</span>
-<span class="cstat-no" title="statement not covered" >        state.error = getErrorMessage(action.error.message);</span>
+        state.loading = false;
+        state.error = getErrorMessage(action.error.message);
       })
       .addCase(getOrderByNumber.fulfilled, (state, action) =&gt; {
-<span class="cstat-no" title="statement not covered" >        state.loading = false;</span>
-<span class="cstat-no" title="statement not covered" >        state.order = action.payload.orders[0];</span>
+        state.loading = false;
+        state.order = action.payload.orders[0];
       });
   }
 });
 &nbsp;
 export const { getOrderByNumberSelector } = orderSlice.selectors;
+const orderReducer = orderSlice.reducer;
+export default orderReducer;
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -214,7 +220,7 @@ export const { getOrderByNumberSelector } = orderSlice.selectors;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-06-04T15:25:51.187Z
+                at 2025-06-09T13:18:00.706Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

@@ -9,6 +9,9 @@ jest.mock('@api', () => ({
 }));
 
 describe('тесты слайса feed', () => {
+      beforeEach(() => {
+      jest.clearAllMocks();
+    });
   const initialState = {
     loading: false,
     error: null,
