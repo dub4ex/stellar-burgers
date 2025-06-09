@@ -155,7 +155,6 @@ describe('тест слайса конструктора', () => {
     };
 
     describe('тесты экшена добавление предмета в конструктор', () => {
-
       test('Добавление булки в конструктор', () => {
         const newState = constructorReducer(
           initialConstructorState,
@@ -228,7 +227,6 @@ describe('тест слайса конструктора', () => {
     });
 
     describe('тесты удаления предмета из конструктора', () => {
-
       test('тест удаления существующего предмета из конструктора', () => {
         const newState = constructorReducer(
           initStateWithIngredients,
@@ -258,9 +256,7 @@ describe('тест слайса конструктора', () => {
     });
 
     describe('Тесты перемещения ингредиентов', () => {
-
       describe('тесты перемещения ингредиента вверх', () => {
-
         test('тест перемещения первого ингредниента вверх', () => {
           const newState = constructorReducer(
             initStateWithIngredients,

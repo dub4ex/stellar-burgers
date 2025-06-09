@@ -8,7 +8,7 @@ jest.mock('@api', () => ({
   getFeedsApi: jest.fn()
 }));
 
-describe('тесты слайса фида', () => {
+describe('тесты слайса feed', () => {
   const initialState = {
     loading: false,
     error: null,
