@@ -365,8 +365,7 @@ describe('тест слайса конструктора', () => {
       jest.clearAllMocks();
     });
 
-    test('успешный запрос fulfilled', async () => {
-      //можно поменять тест rejected как тут
+    test('тест успешного запроса fulfilled', async () => {
       (orderBurgerApi as jest.Mock) = jest.fn().mockResolvedValue({
         success: true,
         order: testOrder
@@ -399,7 +398,7 @@ describe('тест слайса конструктора', () => {
       expect(newState.order).toBeNull();
     });
 
-    test('ошибка rejected', () => {
+    test('тест ошибки rejected', () => {
       const errorMessage = 'тестовая ошибка';
       const action = {
         type: orderBurger.rejected.type,
