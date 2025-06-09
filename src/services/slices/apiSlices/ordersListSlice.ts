@@ -46,3 +46,5 @@ export const ordersListSlice = createSlice({
 });
 
 export const { getOrders, orderListSelector } = ordersListSlice.selectors;
+const ordersListReducer = ordersListSlice.reducer;
+export default ordersListReducer;
