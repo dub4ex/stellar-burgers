@@ -41,7 +41,7 @@ describe('тесты слайса order', () => {
     orders: [order]
   };
 
-  describe('тесты асинхронных экшенов getFeed', () => {
+  describe('тесты асинхронных экшенов getOrderByNumber', () => {
     test('обработка pending', () => {
       const action = {
         type: getOrderByNumber.pending.type

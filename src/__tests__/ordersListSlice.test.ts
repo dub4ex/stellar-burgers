@@ -101,7 +101,7 @@ describe('тесты слайса ordersList', () => {
     }
   ];
 
-  describe('тесты асинхронных экшенов getFeed', () => {
+  describe('тесты асинхронных экшенов getOrdersList', () => {
     test('обработка pending', () => {
       const action = {
         type: getOrdersList.pending.type

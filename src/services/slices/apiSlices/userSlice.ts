@@ -204,3 +204,5 @@ export const {
   isAuthCheckedSelector
 } = userSlice.selectors;
 export const { userLogout, clearError, authChecked } = userSlice.actions;
+const userReducer = userSlice.reducer;
+export default userReducer;

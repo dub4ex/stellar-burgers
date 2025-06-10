@@ -64,7 +64,7 @@ describe('тесты слайса ingredients', () => {
     }
   ];
 
-  describe('тесты асинхронных экшенов getFeed', () => {
+  describe('тесты асинхронных экшенов getIngredients', () => {
     test('обработка pending', () => {
       const action = {
         type: getIngredients.pending.type
