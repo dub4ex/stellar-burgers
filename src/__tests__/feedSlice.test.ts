@@ -9,9 +9,9 @@ jest.mock('@api', () => ({
 }));
 
 describe('тесты слайса feed', () => {
-      beforeEach(() => {
-      jest.clearAllMocks();
-    });
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
   const initialState = {
     loading: false,
     error: null,
@@ -98,21 +98,3 @@ describe('тесты слайса feed', () => {
     });
   });
 });
-
-/*
-type TFeedState = {
-  loading: boolean;
-  error: string | null;
-  orders: TOrder[];
-  total: number | null;
-  totalToday: number | null;
-};
-
-const initialState: TFeedState = {
-  loading: false,
-  error: null,
-  orders: [],
-  total: null,
-  totalToday: null
-};
-*/

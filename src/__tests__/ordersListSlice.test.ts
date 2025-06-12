@@ -139,17 +139,3 @@ describe('тесты слайса ordersList', () => {
     });
   });
 });
-
-/*
-type TOrdersListState = {
-  loading: boolean;
-  error: string | null;
-  orders: Array<TOrder>;
-};
-
-const initialState: TOrdersListState = {
-  loading: false,
-  error: null,
-  orders: []
-};
-*/

@@ -78,22 +78,3 @@ describe('тесты слайса order', () => {
     });
   });
 });
-
-/* type TOrderResponse = TServerResponse<{
-  orders: TOrder[];
-}>; */
-
-/*
-type TOrderState = {
-  loading: boolean;
-  error: string | null;
-  order: TOrder | null;
-};
-
-const initialState: TOrderState = {
-  loading: false,
-  error: null,
-  order: null
-};
-*/
-
