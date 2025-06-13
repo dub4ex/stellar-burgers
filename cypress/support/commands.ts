@@ -8,30 +8,38 @@
 // commands please read more here:
 // https://on.cypress.io/custom-commands
 // ***********************************************
-//
-//
-// -- This is a parent command --
-// Cypress.Commands.add('login', (email, password) => { ... })
-//
-//
-// -- This is a child command --
-// Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// -- This is a dual command --
-// Cypress.Commands.add('dismiss', { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
-// -- This will overwrite an existing command --
-// Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
-//
-// declare global {
-//   namespace Cypress {
-//     interface Chainable {
-//       login(email: string, password: string): Chainable<void>
-//       drag(subject: string, options?: Partial<TypeOptions>): Chainable<Element>
-//       dismiss(subject: string, options?: Partial<TypeOptions>): Chainable<Element>
-//       visit(originalFn: CommandOriginalFn, url: string, options: Partial<VisitOptions>): Chainable<Element>
-//     }
-//   }
-// }
+export const selectors = {
+  modal: '#modals',
+  item: (itemId: string) => `[data-cy="item-${itemId}"]`,
+  emptyTop: `[data-cy="empty-top-bun"]`,
+  emptyIng: `[data-cy="empty-ingredients"]`,
+  emptyBottom: `[data-cy="empty-bottom-bun"]`
+};
+
+Cypress.Commands.add('addItemToConstructor', (itemId) => {
+  cy.get(selectors.item(itemId)).find('button').click();
+});
+Cypress.Commands.add('openModalByItemId', (itemId) => {
+  cy.get(selectors.item(itemId)).click();
+  cy.get(selectors.modal).should('exist').and('not.be.empty');
+});
+Cypress.Commands.add('closeModalByButton', () => {
+  cy.get(selectors.modal).as('modal');
+  cy.get('@modal').find('button').click();
+  cy.get('@modal').should('be.empty');
+});
+Cypress.Commands.add('closeModalByOverlay', () => {
+  cy.get(selectors.modal).as('modal');
+  cy.get('@modal').find(`[data-cy="overlay"]`).click({ force: true }); // force, чтобы клик прошел даже если overlay перекрыт
+  cy.get('@modal').should('be.empty');
+});
+Cypress.Commands.add('checkConstructorEmpty', () => {
+  cy.get(selectors.emptyTop).should('exist');
+  cy.get(selectors.emptyIng).should('exist');
+  cy.get(selectors.emptyBottom).should('exist');
+});
+Cypress.Commands.add('checkConstructorNotEmpty', () => {
+  cy.get(selectors.emptyTop).should('not.exist');
+  cy.get(selectors.emptyIng).should('not.exist');
+  cy.get(selectors.emptyBottom).should('not.exist');
+});
