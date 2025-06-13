@@ -54,9 +54,7 @@ export const registerUser = createAsyncThunk(
   }
 );
 
-export const getUser = createAsyncThunk('user/getInfo', async () =>
-  getUserApi()
-);
+export const getUser = createAsyncThunk('user/getInfo', getUserApi);
 
 export const checkUserAuth = createAsyncThunk(
   'user/checkUser',
@@ -206,3 +204,5 @@ export const {
   isAuthCheckedSelector
 } = userSlice.selectors;
 export const { userLogout, clearError, authChecked } = userSlice.actions;
+const userReducer = userSlice.reducer;
+export default userReducer;
