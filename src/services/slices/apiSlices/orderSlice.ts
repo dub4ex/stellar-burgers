@@ -46,3 +46,5 @@ export const orderSlice = createSlice({
 });
 
 export const { getOrderByNumberSelector } = orderSlice.selectors;
+const orderReducer = orderSlice.reducer;
+export default orderReducer;

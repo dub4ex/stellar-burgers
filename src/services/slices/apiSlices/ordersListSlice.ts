@@ -15,9 +15,7 @@ const initialState: TOrdersListState = {
   orders: []
 };
 
-export const getOrdersList = createAsyncThunk('orders/getAll', async () =>
-  getOrdersApi()
-);
+export const getOrdersList = createAsyncThunk('orders/getAll', getOrdersApi);
 
 export const ordersListSlice = createSlice({
   name: 'ordersList',
@@ -48,3 +46,5 @@ export const ordersListSlice = createSlice({
 });
 
 export const { getOrders, orderListSelector } = ordersListSlice.selectors;
+const ordersListReducer = ordersListSlice.reducer;
+export default ordersListReducer;
